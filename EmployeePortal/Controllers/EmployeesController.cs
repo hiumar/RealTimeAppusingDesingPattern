@@ -6,31 +6,21 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using EmployeePortal.Factory;
+using EmployeePortal.Managers;
 using EmployeePortal.Models;
-using LogWeb;
 
 namespace EmployeePortal.Controllers
 {
-    public class EmployeesController : Controller
+    public class EmployeesController : BaseController
     {
         private EmployeedbEntities db = new EmployeedbEntities();
 
         // GET: Employees
-        private ILogger _logger;
-        public EmployeesController()
-        {
-            _logger = Log.GetInstance;
-
-        }
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            _logger.LogException(filterContext.Exception.ToString());
-            filterContext.ExceptionHandled = true;
-            this.View("Error").ExecuteResult(this.ControllerContext);
-        }
         public ActionResult Index()
         {
-            return View(db.Employees.ToList());
+            var employees = db.Employees.Include(e => e.Employee_Type);
+            return View(employees.ToList());
         }
 
         // GET: Employees/Details/5
@@ -51,6 +41,7 @@ namespace EmployeePortal.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
+            ViewBag.EmployeeTypeId = new SelectList(db.Employee_Type, "Id", "EmployeeType");
             return View();
         }
 
@@ -59,15 +50,30 @@ namespace EmployeePortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,JobDescription,Number,Department")] Employee employee)
+        public ActionResult Create([Bind(Include = "Id,Name,JobDescription,Number,Department,HourlyPay,Bonus,EmployeeTypeId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
+                EmployeeManagerFactory factory = new EmployeeManagerFactory();
+                IEmployeeManager manger = factory.GetEmployeeManager(employee.EmployeeTypeId);
+                employee.Bonus = manger.GetBounus();
+                employee.HourlyPay = manger.GetPay();
+
+                //if (employee.EmployeeTypeId == 1)
+                //{
+                //    employee.Bonus = 10;
+                //    employee.HourlyPay = 8;
+                //}else if(employee.EmployeeTypeId==2)
+                //{
+                //    employee.Bonus = 8;
+                //    employee.HourlyPay = 12;
+                //}
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.EmployeeTypeId = new SelectList(db.Employee_Type, "Id", "EmployeeType", employee.EmployeeTypeId);
             return View(employee);
         }
 
@@ -83,6 +89,7 @@ namespace EmployeePortal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.EmployeeTypeId = new SelectList(db.Employee_Type, "Id", "EmployeeType", employee.EmployeeTypeId);
             return View(employee);
         }
 
@@ -91,7 +98,7 @@ namespace EmployeePortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,JobDescription,Number,Department")] Employee employee)
+        public ActionResult Edit([Bind(Include = "Id,Name,JobDescription,Number,Department,HourlyPay,Bonus,EmployeeTypeId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +106,7 @@ namespace EmployeePortal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.EmployeeTypeId = new SelectList(db.Employee_Type, "Id", "EmployeeType", employee.EmployeeTypeId);
             return View(employee);
         }
 

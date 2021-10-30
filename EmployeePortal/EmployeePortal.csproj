@@ -133,11 +133,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Factory\EmployeeManagerFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Managers\ContractEmployee.cs" />
+    <Compile Include="Managers\IEmployeeManager.cs" />
+    <Compile Include="Managers\PermanentEmployee.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>EmployeeModel.tt</DependentUpon>
     </Compile>
@@ -155,6 +160,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployeeModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee_Type.cs">
+      <DependentUpon>EmployeeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -245,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ErrorLogs\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
