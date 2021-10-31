@@ -137,6 +137,10 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Factory\EmployeeManagerFactory.cs" />
+    <Compile Include="Factory\FactoryMethods\BaseEmployeeFactory.cs" />
+    <Compile Include="Factory\FactoryMethods\ContractEmployeeFactory.cs" />
+    <Compile Include="Factory\FactoryMethods\EmployeeManagerFactory.cs" />
+    <Compile Include="Factory\FactoryMethods\PermanentEmployeeFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

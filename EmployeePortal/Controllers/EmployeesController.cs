@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using EmployeePortal.Factory;
+using EmployeePortal.Factory.FactoryMethods;
 using EmployeePortal.Managers;
 using EmployeePortal.Models;
 
@@ -54,10 +54,12 @@ namespace EmployeePortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                EmployeeManagerFactory factory = new EmployeeManagerFactory();
-                IEmployeeManager manger = factory.GetEmployeeManager(employee.EmployeeTypeId);
-                employee.Bonus = manger.GetBounus();
-                employee.HourlyPay = manger.GetPay();
+                //EmployeeManagerFactory factory = new EmployeeManagerFactory();
+                //IEmployeeManager manger = factory.GetEmployeeManager(employee.EmployeeTypeId);
+                //employee.Bonus = manger.GetBounus();
+                //employee.HourlyPay = manger.GetPay();
+
+                //abou code is use for without abstract factory
 
                 //if (employee.EmployeeTypeId == 1)
                 //{
@@ -68,6 +70,9 @@ namespace EmployeePortal.Controllers
                 //    employee.Bonus = 8;
                 //    employee.HourlyPay = 12;
                 //}
+
+               BaseEmployeeFactory factory = new EmployeeManagerFactory().CreateFactory(employee);
+                factory.ApplySalary();
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
