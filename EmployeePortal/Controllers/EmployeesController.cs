@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using EmployeePortal.Factory.AbstractFactory;
 using EmployeePortal.Factory.FactoryMethods;
 using EmployeePortal.Managers;
 using EmployeePortal.Models;
@@ -71,8 +72,11 @@ namespace EmployeePortal.Controllers
                 //    employee.HourlyPay = 12;
                 //}
 
-               BaseEmployeeFactory factory = new EmployeeManagerFactory().CreateFactory(employee);
+                BaseEmployeeFactory factory = new EmployeeManagerFactory().CreateFactory(employee);
                 factory.ApplySalary();
+                IComputerFactory cfactory=new EmployeeSystemFactory().Create(employee);
+                EmployeeSystemManager manager = new EmployeeSystemManager(cfactory);
+                employee.ComputerDetails = manager.GetComputerDetails();
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
