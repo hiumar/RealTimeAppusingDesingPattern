@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -136,6 +137,16 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Factory\AbstractFactory\IBrand.cs" />
+    <Compile Include="Factory\AbstractFactory\Dell.cs" />
+    <Compile Include="Factory\AbstractFactory\Enumrations.cs" />
+    <Compile Include="Factory\AbstractFactory\IComputerFactory.cs" />
+    <Compile Include="Factory\AbstractFactory\IProcessorType.cs" />
+    <Compile Include="Factory\AbstractFactory\ISystemType.cs" />
+    <Compile Include="Factory\AbstractFactory\Laptop.cs" />
+    <Compile Include="Factory\AbstractFactory\Mac.cs" />
+    <Compile Include="Factory\AbstractFactory\MacFactory.cs" />
+    <Compile Include="Factory\AbstractFactory\Processors.cs" />
     <Compile Include="Factory\EmployeeManagerFactory.cs" />
     <Compile Include="Factory\FactoryMethods\BaseEmployeeFactory.cs" />
     <Compile Include="Factory\FactoryMethods\ContractEmployeeFactory.cs" />
