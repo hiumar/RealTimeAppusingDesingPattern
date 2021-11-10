@@ -39,6 +39,41 @@ namespace EmployeePortal.Controllers
             return View(employee);
         }
 
+        public ActionResult BuildSystem(int ? employeeId)
+        
+        {
+            Employee employee = db.Employees.Find(employeeId);
+            if (employee.ComputerDetails.Contains("Laptop"))
+            {
+                return View("BuildLaptop", employeeId);
+            }
+            else
+            {
+                return View("BuildDesktop", employeeId);
+            }
+
+        }
+
+       public ActionResult BuildLaptop()
+        {
+            return View();
+
+        }
+        public ActionResult BuildDesktop()
+        {
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult BuildSystem(int employeeId,string RAM, string HDDSize)
+        {
+            //Employee employee = db.Employees.Find(employeeId);
+            //ComputerSystem system = new ComputerSystem(RAM, HDDSize);
+            //employee.SystemConfigrationDetails = system.build();
+            //db.Entry(employee).State = EntityState.Modified;
+            //db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: Employees/Create
         public ActionResult Create()
         {
